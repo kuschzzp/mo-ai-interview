@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  interview-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: interview-app:latest
+    container_name: interview-app
+    ports:
+      - "18080:8080"
+    environment:
+      API_KEY: "your_api_key"
+      BASE_URL: "your_api_base_url"
+      # 基础模型，若下面的不自定义，则默认为 BASE_MODEL_NAME
+      BASE_MODEL_NAME: "qwen-max"
+      # 生成自我介绍用的模型
+#      SELF_INTRODUCTION_MODEL_NAME: "qwen-plus"
+      # 生成面试大纲用的模型
+#      INTERVIEW_OUTLINE_MODEL_NAME: "qwen3-max"
+      # 生成问题用的模型
+#      GENERATE_QUESTIONS_MODEL_NAME: ""
+      # 分析答案用的模型
+#      QA_DIAGNOSE_MODEL_NAME: ""
+
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8910/interview/health')" ]
+      interval: 300s
+      timeout: 10s
+      retries: 3
+      start_period: 20s

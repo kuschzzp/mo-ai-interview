@@ -1,0 +1,13 @@
+LICENSE
+README.md
+
+interview-myself/.venv
+interview-myself/.env
+interview-myself-web/node_modules
+interview-myself-web/dist
+
+.idea/
+.vscode/
+.DS_Store
+
+
